@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python run_challenge.py)",
+      "Bash(python starter_project/scripts/run_local_check.py starter_project/data/orders_passed.csv --skip-discord)",
+      "Bash(python starter_project/scripts/run_local_check.py starter_project/data/orders_failed.csv --allow-failure --skip-discord)",
+      "Bash(docker *)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :6333)",
+      "Bash(taskkill *)",
+      "Bash(Start-Process *)",
+      "PowerShell(Start-Process \"C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe\")",
+      "Bash(python *)",
+      "Bash(pip install *)",
+      "Bash(curl *')",
+      "Bash(pytest *)"
+    ]
+  }
+}

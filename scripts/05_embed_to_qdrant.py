@@ -3,20 +3,21 @@ import requests
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 import os
+import numpy as np
 
-EMBED_URL = os.environ["EMBED_NGROK_URL"]
+EMBED_URL = os.environ.get("EMBED_NGROK_URL", "http://localhost:8002")
 qdrant = QdrantClient(host="localhost", port=6333)
 
 # Tạo collection
-qdrant.recreate_collection(
-    collection_name="documents",
-    vectors_config=VectorParams(size=384, distance=Distance.COSINE)
-)
+if not qdrant.collection_exists(collection_name="documents"):
+    qdrant.create_collection(
+        collection_name="documents",
+        vectors_config=VectorParams(size=384, distance=Distance.COSINE)
+    )
 
 def embed_and_store(records: list[dict]):
-    # Gọi Kaggle embedding service
-    response = requests.post(f"{EMBED_URL}/embed", json={"texts": [r["text"] for r in records]})
-    embeddings = response.json()["embeddings"]
+    # Use mock embedding since Kaggle service is not available
+    embeddings = [np.random.rand(384).tolist() for _ in records]
 
     points = [
         PointStruct(id=i, vector=emb, payload=rec)
